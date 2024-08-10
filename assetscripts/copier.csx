@@ -9,7 +9,7 @@ using System.IO;
 EnsureDataLoaded();
 
 // Replace with your own
-string endlessVoidPath = "D:/GithubProjects/void-stranger-endless-void";
+string endlessVoidPath = "C:/Users/David/Documents/GameMakerStudio2/void-stranger-endless-void";
 
 // A script to copy all required Void Stranger assets into Endless Void.
 

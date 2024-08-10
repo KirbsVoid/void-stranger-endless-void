@@ -11,8 +11,8 @@ EnsureDataLoaded();
 
 
 // Replace with your own
-string endlessVoidDataPath = "D:/GithubProjects/EV_Test/data.win";
-string endlessVoidPatchesPath = "D:/GithubProjects/void-stranger-endless-void/patches";
+string endlessVoidDataPath = "C:/Users/David/Documents/GameMakerStudio2/void-stranger-endless-void/merge/data.win";
+string endlessVoidPatchesPath = "C:/Users/David/Documents/GameMakerStudio2/void-stranger-endless-void/patches";
 
 int stringListLength = Data.Strings.Count;
 
