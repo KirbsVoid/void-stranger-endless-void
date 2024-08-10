@@ -18,6 +18,7 @@ enum EntityType {
 	Maggot,
 	Eye,
 	Bull,
+	Soldier,
 	Chester,
 
 	Mimic,
@@ -40,6 +41,9 @@ enum EntityType {
 	LevStatue,
 	CifStatue,
 	JukeBox,
+	AntiWings,
+	AntiSword,
+	AntiMemory,
 
 	Interactable,
 
@@ -62,6 +66,8 @@ enum TileType {
 	LocustTile,
 	SpriteTile,
 	HalfBomb,
+	SpikeSwitch,
+	FloorSpikes,
 };
 
 show_debug_message("writing gba save");
@@ -143,6 +149,12 @@ for(var i=0; i < 14; i++) {
 				output = TileType.Floor;
 				break;
 				
+			case "sw":
+				output = TileType.SpikeSwitch;
+				break;
+			case "sf":
+				output = TileType.FloorSpikes;
+				break;
 			
 			// -----
 			
@@ -182,6 +194,9 @@ for(var i=0; i < 14; i++) {
 				case "co":
 					output = EntityType.Diamond;
 					break;
+				case "so":
+					output = EntityType.Soldier;
+					break;
 					
 				// -----
 					
@@ -214,6 +229,15 @@ for(var i=0; i < 14; i++) {
 					break;
 				case "eu":
 					output = EntityType.EusStatue;
+					break;
+				case "aw":
+					output = EntityType.AntiWings;
+					break;
+				case "as":
+					output = EntityType.AntiSword;
+					break;
+				case "am":
+					output = EntityType.AntiMemory;
 					break;
 				
 				// -----

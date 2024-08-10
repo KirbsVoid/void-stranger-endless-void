@@ -197,6 +197,14 @@ function editor_object(display_name, spr_ind, tile_id, obj_name, obj_layer = "In
 #macro black_floor_obj "obj_floor"
 #macro black_floor_name "Black Floor"
 
+#macro spikeswitch_id "sw"
+#macro spikeswitch_obj "obj_ev_spikeswitch"
+#macro spikeswitch_name "Spike Switch"
+
+#macro floorspikes_id "sf"
+#macro floorspikes_obj "obj_ev_floorspikes"
+#macro floorspikes_name "Spike Floor"
+
 #macro white_id "wh"
 #macro white_obj "obj_floor_blank"
 #macro white_name "Blank Tile"
@@ -277,6 +285,10 @@ function editor_object(display_name, spr_ind, tile_id, obj_name, obj_layer = "In
 #macro orb_obj "obj_enemy_cv"
 #macro orb_name "Orb Thing"
 
+#macro soldier_id "so"
+#macro soldier_obj "obj_ev_enemy_so"
+#macro soldier_name "Soldier"
+
 #macro egg_id "eg"
 #macro egg_name "Egg"
 
@@ -302,6 +314,12 @@ function editor_object(display_name, spr_ind, tile_id, obj_name, obj_layer = "In
 #macro jukebox_id "jb"
 #macro jukebox_name "Jukebox"
 
+#macro antiwing_id "aw"
+#macro antiwing_name "Anti Wings"
+#macro antisword_id "as"
+#macro antisword_name "Anti Sword"
+#macro antimemory_id "am"
+#macro antimemory_name "Anti Memory"
 
 #macro hologram_id "ho"
 #macro hologram_obj "obj_fakewall"
@@ -378,6 +396,66 @@ tile_copyfloor.cube_type = cube_types.edge
 
 tile_exit = new editor_tile(exit_name, asset_get_index("spr_stairs"), exit_id, exit_obj)
 tile_exit.cube_type = cube_types.edge
+
+tile_spikeswitch = new editor_tile(spikeswitch_name, asset_get_index("spr_ev_switchspikes"), spikeswitch_id, spikeswitch_obj)
+tile_spikeswitch.cube_type = cube_types.edge
+tile_spikeswitch.properties_generator = function() {
+    return { switchid: 0 }
+}
+tile_spikeswitch.zed_function = function(tile_state) {
+    new_window(10, 6, asset_get_index("obj_ev_spikeswitch_window"), 
+    { switch_properties: tile_state.properties })  
+    global.mouse_layer = 1
+}
+tile_spikeswitch.draw_function = function(tile_state, i, j) {
+    default_draw_function(tile_state, i, j)
+}
+tile_spikeswitch.iostruct = {
+    read: function(tile, lvl_str, pos) {
+        var switchid = string_char_at(lvl_str, pos);
+        var t = new tile_with_state(tile, { switchid: clamp(int64_safe(switchid, 0), 0, 99) });
+        return { value: t, offset: 1 };
+    },
+    write: function(tile_state) {
+        return tile_state.tile.tile_id + string(tile_state.properties.switchid);
+    },
+    place: function(tile_state, i, j) {
+        var inst = instance_create_layer(j * 16 + 8, i * 16 + 8, tile_state.tile.obj_layer, asset_get_index(tile_state.tile.obj_name));
+        with (inst) {
+            switchid = tile_state.properties.switchid;
+        }
+    }
+}
+
+tile_floorspikes = new editor_tile(floorspikes_name, asset_get_index("spr_ev_floorspikes"), floorspikes_id, floorspikes_obj)
+tile_floorspikes.cube_type = cube_types.edge
+tile_floorspikes.properties_generator = function() {
+    return { switchid: 0 }
+}
+tile_floorspikes.zed_function = function(tile_state) {
+    new_window(10, 6, asset_get_index("obj_ev_floorspikes_window"), 
+    { switch_properties: tile_state.properties })  
+    global.mouse_layer = 1
+}
+tile_floorspikes.draw_function = function(tile_state, i, j) {
+    default_draw_function(tile_state, i, j)
+}
+tile_floorspikes.iostruct = {
+    read: function(tile, lvl_str, pos) {
+        var switchid = string_char_at(lvl_str, pos);
+        var t = new tile_with_state(tile, { switchid: clamp(int64_safe(switchid, 0), 0, 99) });
+        return { value: t, offset: 1 };
+    },
+    write: function(tile_state) {
+        return tile_state.tile.tile_id + string(tile_state.properties.switchid);
+    },
+    place: function(tile_state, i, j) {
+        var inst = instance_create_layer(j * 16 + 8, i * 16 + 8, tile_state.tile.obj_layer, asset_get_index(tile_state.tile.obj_name));
+        with (inst) {
+            switchid = tile_state.properties.switchid;
+        }
+    }
+}
 
 function can_tile_press_buttons(tile) {
 	static exceptions = [object_empty, object_hologram, object_secret_exit]
@@ -675,6 +753,8 @@ object_maggot.iostruct = directioned_iostruct
 
 object_bull = new editor_object(bull_name, asset_get_index("spr_cg_idle"), bull_id, bull_obj)
 object_bull.draw_function = music_draw_function
+object_soldier = new editor_object(soldier_name, asset_get_index("spr_ev_un_soldier_idle_d"), soldier_id, soldier_obj)
+object_soldier.draw_function = music_draw_function
 object_gobbler = new editor_object(gobbler_name, asset_get_index("spr_cs_right"), gobbler_id, gobbler_obj)
 object_gobbler.draw_function = music_draw_function
 object_hand = new editor_object(hand_name, asset_get_index("spr_ch"), hand_id, hand_obj)
@@ -1010,6 +1090,15 @@ object_gor.iostruct = voidlord_io(5)
 object_jukebox = new editor_object(jukebox_name, asset_get_index("spr_jb"), jukebox_id, egg_statue_obj)
 object_jukebox.iostruct = voidlord_io(9)
 
+object_antiwing = new editor_object(antiwing_name, asset_get_index("spr_ev_disabler_wings"), antiwing_id, egg_statue_obj)
+object_antiwing.iostruct = voidlord_io(10)
+
+object_antisword = new editor_object(antisword_name, asset_get_index("spr_ev_disabler_sword"), antisword_id, egg_statue_obj)
+object_antisword.iostruct = voidlord_io(11)
+
+object_antimemory = new editor_object(antimemory_name, asset_get_index("spr_ev_disabler_memory"), antimemory_id, egg_statue_obj)
+object_antimemory.iostruct = voidlord_io(12)
+
 object_secret_exit = new editor_object(secret_exit_name, asset_get_index("spr_ev_secret_exit_arrow"), secret_exit_id, secret_exit_obj)
 
 // 0 - invisible, 1 - stars, 2 - stink lines
@@ -1183,12 +1272,12 @@ for (var i = 0; i < 7; i++) {
 
 
 tiles_list = [tile_default, tile_glass, tile_bomb, tile_explo, tile_floorswitch, tile_copyfloor, tile_exit, 
-	tile_deathfloor, tile_black_floor, tile_white, tile_wall, tile_mon_wall, tile_dis_wall, tile_ex_wall, tile_edge, tile_edge_dis, tile_chest]
+	tile_deathfloor, tile_black_floor, tile_white, tile_wall, tile_mon_wall, tile_dis_wall, tile_ex_wall, tile_edge, tile_edge_dis, tile_chest, tile_spikeswitch, tile_floorspikes]
 	
 objects_list = [object_player, object_leech, object_maggot, object_bull, object_gobbler, object_hand, 
 	object_mimic, object_diamond, object_hungry_man, object_add, object_cif, object_bee, object_tan, object_lev, object_mon, object_eus, object_gor, 
 	object_jukebox, object_egg, object_hologram, object_memory_crystal, object_secret_exit,
-	object_spider, object_scaredeer, object_orb]
+	object_spider, object_scaredeer, object_orb, object_soldier, object_antiwing, object_antisword, object_antimemory]
 
 global.music_names = ["", "msc_001", "msc_dungeon_wings", "msc_beecircle", "msc_dungeongroove", "msc_013",
 	"msc_gorcircle_lo", "msc_levcircle", "msc_escapewithfriend", "msc_cifcircle", "msc_006", "msc_beesong", "msc_themeofcif",

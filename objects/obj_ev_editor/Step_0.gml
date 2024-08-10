@@ -9,7 +9,6 @@ if room == asset_get_index("rm_ev_level") {
 	}
 }
 
-
 if (room == asset_get_index("rm_ev_startup")) {
 	if (startup_timeout != -1) {
 		startup_timeout--;
@@ -167,6 +166,7 @@ else if (room == global.level_room) {
 	global.octahedron_count = instance_number_string(diamond_obj)
 	global.spider_count = instance_number_string(spider_obj)
 	global.orb_count = instance_number_string(orb_obj)
+	global.soldier_count = instance_number_string(soldier_obj)
 	global.scaredeer_count = instance_number_string(scaredeer_obj)
 	with (asset_get_index("obj_player")) {
 		global.player_x = x div 16;
@@ -182,6 +182,9 @@ else if (room == global.level_room) {
 	global.gor_count = 0;
 	global.cif_count = 0;
 	global.jukebox_count = 0;
+	global.antiwing_count = 0;
+	global.antisword_count = 0;
+	global.antimemory_count = 0;
 	global.egg_count = 0;
 	
 	with (asset_get_index(egg_statue_obj)) {
@@ -212,6 +215,15 @@ else if (room == global.level_room) {
 				break;
 			case 9:
 				global.jukebox_count++;
+				break;
+			case 10:
+				global.antiwing_count++;
+				break;
+			case 11:
+				global.antisword_count++;
+				break;
+			case 12:
+				global.antimemory_count++;
 				break;
 			case 0:
 				global.egg_count++;

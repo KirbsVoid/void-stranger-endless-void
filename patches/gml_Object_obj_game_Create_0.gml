@@ -13,3 +13,7 @@ global.swapper_toggle = 1
 global.swapper_backup = 0
 global.swapper_style = 0
 global.swapper_get = 0
+// TARGET: LINENUMBER
+// 202
+global.floorspikes_list = ds_list_create()
+global.switchspikes_list = ds_list_create()

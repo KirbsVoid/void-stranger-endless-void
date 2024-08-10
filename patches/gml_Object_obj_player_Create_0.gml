@@ -100,3 +100,11 @@ switch global.blade_style
 }
 swap_stage = 0
 swapper_flash_counter = 0
+if ds_exists(global.floorspikes_list, 2)
+    ds_list_clear(global.floorspikes_list)
+else
+    global.floorspikes_list = ds_list_create()
+if ds_exists(global.switchspikes_list, 2)
+    ds_list_clear(global.switchspikes_list)
+else
+    global.switchspikes_list = ds_list_create()
