@@ -46,3 +46,7 @@ movingnotif = 0
 idlenotif = 0
 previous_x = x
 previous_y = y
+keepmoving = 0
+shootmade = 0
+shootingdone = 0
+delayedact = 0

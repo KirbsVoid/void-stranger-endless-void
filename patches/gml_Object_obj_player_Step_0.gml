@@ -901,6 +901,17 @@ else if (state == (13 << 0))
                                 }
                             }
                             break
+                        case "Y":
+		            var tp_floor = instance_create_layer((x + p_move_x), (y + p_move_y), "Floor", obj_tpfloor)
+		            with (tp_floor)
+		            {
+			        if (ds_list_size(global.tp_list) > 0)
+			        {
+				    tpid = ds_list_find_value(global.tp_list, (ds_list_size(global.tp_list) - 1))
+				    ds_list_delete(global.tp_list, (ds_list_size(global.tp_list) - 1))
+			        }
+		             }
+                             break
                         case "X":
                             instance_create_layer((x + p_move_x), (y + p_move_y), "Floor", obj_deathfloor)
                             break

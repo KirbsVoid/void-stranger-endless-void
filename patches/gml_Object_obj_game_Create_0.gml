@@ -17,3 +17,4 @@ global.swapper_get = 0
 // 202
 global.floorspikes_list = ds_list_create()
 global.switchspikes_list = ds_list_create()
+global.tp_list = ds_list_create()

@@ -68,6 +68,7 @@ enum TileType {
 	HalfBomb,
 	SpikeSwitch,
 	FloorSpikes,
+	TPFloor,
 };
 
 show_debug_message("writing gba save");
@@ -154,6 +155,9 @@ for(var i=0; i < 14; i++) {
 				break;
 			case "sf":
 				output = TileType.FloorSpikes;
+				break;
+			case "tp":
+				output = TileType.TPFloor;
 				break;
 			
 			// -----

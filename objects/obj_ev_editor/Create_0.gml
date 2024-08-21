@@ -205,6 +205,10 @@ function editor_object(display_name, spr_ind, tile_id, obj_name, obj_layer = "In
 #macro floorspikes_obj "obj_ev_floorspikes"
 #macro floorspikes_name "Spike Floor"
 
+#macro tpfloor_id "tp"
+#macro tpfloor_obj "obj_ev_tpfloor"
+#macro tpfloor_name "TP Floor"
+
 #macro white_id "wh"
 #macro white_obj "obj_floor_blank"
 #macro white_name "Blank Tile"
@@ -396,6 +400,9 @@ tile_copyfloor.cube_type = cube_types.edge
 
 tile_exit = new editor_tile(exit_name, asset_get_index("spr_stairs"), exit_id, exit_obj)
 tile_exit.cube_type = cube_types.edge
+
+tile_tpfloor = new editor_tile(tpfloor_name, asset_get_index("spr_ev_tpfloor"), tpfloor_id, tpfloor_obj)
+tile_tpfloor.cube_type = cube_types.edge
 
 tile_spikeswitch = new editor_tile(spikeswitch_name, asset_get_index("spr_ev_switchspikes"), spikeswitch_id, spikeswitch_obj)
 tile_spikeswitch.cube_type = cube_types.edge
@@ -1272,7 +1279,7 @@ for (var i = 0; i < 7; i++) {
 
 
 tiles_list = [tile_default, tile_glass, tile_bomb, tile_explo, tile_floorswitch, tile_copyfloor, tile_exit, 
-	tile_deathfloor, tile_black_floor, tile_white, tile_wall, tile_mon_wall, tile_dis_wall, tile_ex_wall, tile_edge, tile_edge_dis, tile_chest, tile_spikeswitch, tile_floorspikes]
+	tile_deathfloor, tile_black_floor, tile_white, tile_wall, tile_mon_wall, tile_dis_wall, tile_ex_wall, tile_edge, tile_edge_dis, tile_chest, tile_spikeswitch, tile_floorspikes, tile_tpfloor]
 	
 objects_list = [object_player, object_leech, object_maggot, object_bull, object_gobbler, object_hand, 
 	object_mimic, object_diamond, object_hungry_man, object_add, object_cif, object_bee, object_tan, object_lev, object_mon, object_eus, object_gor, 

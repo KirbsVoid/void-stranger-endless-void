@@ -108,3 +108,10 @@ if ds_exists(global.switchspikes_list, 2)
     ds_list_clear(global.switchspikes_list)
 else
     global.switchspikes_list = ds_list_create()
+if ds_exists(global.tp_list, 2)
+    ds_list_clear(global.tp_list)
+else
+    global.tp_list = ds_list_create()
+notification_text = ""
+notification_timer = 0
+notificationfont = 12
