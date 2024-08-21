@@ -902,7 +902,7 @@ else if (state == (13 << 0))
                             }
                             break
                         case "Y":
-		            var tp_floor = instance_create_layer((x + p_move_x), (y + p_move_y), "Floor", obj_tpfloor)
+		            var tp_floor = instance_create_layer((x + p_move_x), (y + p_move_y), "Floor", obj_ev_tpfloor)
 		            with (tp_floor)
 		            {
 			        if (ds_list_size(global.tp_list) > 0)
