@@ -27,9 +27,9 @@ if (b_form == 7)
             }
         }
     }
-    if instance_exists(obj_tpfloor)
+    if instance_exists(obj_ev_tpfloor)
     {
-        with (obj_tpfloor)
+        with (obj_ev_tpfloor)
         {
             if (buffer >= 1)
                 other.mon_grazeperiod = true

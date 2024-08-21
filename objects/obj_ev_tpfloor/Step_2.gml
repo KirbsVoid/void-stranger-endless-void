@@ -54,10 +54,50 @@ while (found != 1)
     }
     itpid++
 }
+if (global.player_tp_once == false)
+    incoming_player = instance_place(previous_tp.x, previous_tp.y, asset_get_index("obj_player"))
+if (buffer == 3 && global.player_tp_once == false)
+{
+    if (place_meeting(x, y, asset_get_index("obj_player")) && asset_get_index("obj_player").state != 6 && asset_get_index("obj_player").state != 15)
+    {
+        var eclose = false
+        for (i = -16; i < 17; i += 32)
+        {
+            if place_meeting((x + i), y, asset_get_index("obj_enemy_co"))
+                eclose = true
+            if place_meeting((x + i), y, asset_get_index("obj_enemy_cs"))
+                eclose = true
+            var close_beaver = instance_place((x + i), y, asset_get_index("obj_enemy_cg"))
+            if (close_beaver != noone && close_beaver.rush == false)
+                eclose = true
+            if place_meeting(x, (y + i), asset_get_index("obj_enemy_co"))
+                eclose = true
+            if place_meeting(x, (y + i), asset_get_index("obj_enemy_cs"))
+                eclose = true
+            close_beaver = instance_place(x, (y + i), asset_get_index("obj_enemy_cg"))
+            if (close_beaver != noone && close_beaver.rush == false)
+                eclose = true
+        }
+        if (incoming_player == -4 && eclose == false)
+        {
+            if (!audio_is_playing(asset_get_index("snd_ev_tp")))
+                audio_play_sound(asset_get_index("snd_ev_tp"), 1, false)
+            flicker = true
+            counter = 0
+            with (585)
+            {
+                x = next_tp.x
+                y = next_tp.y
+            }
+            global.player_tp_once = true
+        }
+    }
+}
+if (buffer == 2)
+    global.player_tp_once = false
 if (buffer == 1)
 {
     incoming_boulder = instance_place(previous_tp.x, previous_tp.y, asset_get_index("obj_boulder"))
-    incoming_player = instance_place(previous_tp.x, previous_tp.y, asset_get_index("obj_player"))
     incoming_enemy = instance_place(previous_tp.x, previous_tp.y, asset_get_index("obj_enemy_parent"))
 }
 if (distance_to_object(asset_get_index("obj_player")) < 17)
@@ -66,84 +106,6 @@ else if (previous_tp.shine_loop == 1)
     shine_loop = 2
 if (can_act == 0)
     return;
-if (place_meeting(x, y, asset_get_index("obj_player")) && asset_get_index("obj_player").state != (6 << 0) && asset_get_index("obj_player").state != (15 << 0))
-{
-    if (incoming_player == -4)
-    {
-        if (!audio_is_playing(asset_get_index("snd_ev_tp")))
-                audio_play_sound(asset_get_index("snd_ev_tp"), 1, false)
-	flicker = true
-        counter = 0
-        with (585)
-        {
-            x = next_tp.x
-            y = next_tp.y
-        }
-	for (i = -16; i < 17; i += 32)
-        {
-            var close_enemy = instance_place((next_tp.x + i), next_tp.y, asset_get_index("obj_enemy_co"))
-            if (close_enemy != noone)
-            {
-                with (close_enemy)
-                    e_state = (9 << 0)
-                with (585)
-                    state = (6 << 0)
-            }
-            else
-            {
-                close_enemy = instance_place((next_tp.x + i), next_tp.y, asset_get_index("obj_enemy_cs"))
-                if (close_enemy != noone)
-                {
-                    with (close_enemy)
-                        e_state = (9 << 0)
-                    with (585)
-                        state = (6 << 0)
-                }
-                else
-                {
-                    close_enemy = instance_place((next_tp.x + i), next_tp.y, asset_get_index("obj_enemy_cg"))
-                    if (close_enemy != noone && close_enemy.stun == 1)
-                    {
-                        with (close_enemy)
-                            e_state = (9 << 0)
-                        with (585)
-                            state = (6 << 0)
-                    }
-                }
-            }
-            close_enemy = instance_place(next_tp.x, (next_tp.y + i), asset_get_index("obj_enemy_co"))
-            if (close_enemy != noone)
-            {
-                with (close_enemy)
-                    e_state = (9 << 0)
-                with (585)
-                    state = (6 << 0)
-            }
-            else
-            {
-                close_enemy = instance_place(next_tp.x, (next_tp.y + i), asset_get_index("obj_enemy_cs"))
-                if (close_enemy != noone)
-                {
-                    with (close_enemy)
-                        e_state = (9 << 0)
-                    with (585)
-                        state = (6 << 0)
-                }
-                else
-                {
-                    close_enemy = instance_place(next_tp.x, (next_tp.y + i), asset_get_index("obj_enemy_cg"))
-                    if (close_enemy != noone && close_enemy.stun == 1)
-                    {
-                        with (close_enemy)
-                            e_state = (9 << 0)
-                        with (585)
-                            state = (6 << 0)
-                    }
-                }
-            }
-        }
-    }
-}
 var list = ds_list_create()
 var num = instance_place_list(x, y, asset_get_index("obj_boulder"), list, false)
 if (num > 0)
@@ -155,13 +117,12 @@ if (num > 0)
         {
             if (!audio_is_playing(asset_get_index("snd_ev_tp")))
                 audio_play_sound(asset_get_index("snd_ev_tp"), 1, false)
-	    flicker = true
+            flicker = true
             counter = 0
             with (iboulder)
             {
                 x = next_tp.x
                 y = next_tp.y
-               
             }
         }
     }
@@ -177,7 +138,7 @@ if (num > 0)
         {
             if (!audio_is_playing(asset_get_index("snd_ev_tp")))
                 audio_play_sound(asset_get_index("snd_ev_tp"), 1, false)
-	    flicker = true
+            flicker = true
             counter = 0
             with (ienemy)
             {
